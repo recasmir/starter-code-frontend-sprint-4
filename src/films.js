@@ -1,4 +1,4 @@
-// Exercise 1: Get the array of all directors.
+// Exercise 1: Get the array of all directors. - Starting exercice
 function getAllDirectors(array) {
   let result =  ???;
   console.log("EXERCICE 1 ->", result);
