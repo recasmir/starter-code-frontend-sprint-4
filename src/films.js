@@ -78,6 +78,11 @@ function hoursToMinutes(movies) {
   result = result.map (movie => {
     let dur = movie.duration
 
+    //check if duration is empty or 0
+    if(dur == 0 || dur == ' '){
+      dur = 0
+    }
+
     if (dur.includes('h')){
       let newDur = dur.split(' ')
       let hour = parseInt(newDur[0])*60
