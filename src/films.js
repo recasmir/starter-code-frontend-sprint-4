@@ -1,18 +1,6 @@
-// fetch("./data.json")
-// .then(response => response.json())
-// .then(data => console.log(data));
-
-//const movies = require("./data");
-
-// const movies = require("./data");
-
-// import {movies} from './data.js';
-
-
-
 //Exercise 1: Get the array of all directors. - Starting exercice
 function getAllDirectors(movies) {
-  let result =  movies.map (movie => movie.director);
+  let result = movies.map (movie => movie.director);
   console.log("EXERCICE 1 ->", result);
   return result;
 }
@@ -20,7 +8,7 @@ function getAllDirectors(movies) {
 // Exercise 2: Get the films of a certain director
 function getMoviesFromDirector(movies, director) {
   let result = movies.filter (movie => {
-    if(director==movie.director){
+    if(director === movie.director){
       return movie.title;
     }
   }); 
@@ -33,7 +21,7 @@ function getMoviesFromDirector(movies, director) {
 // Exercise 3: Calculate the average of the films of a given director.
 function moviesAverageOfDirector(movies, director) {
   let score = movies.filter (movie =>{
-    if(director==movie.director){
+    if(director === movie.director){
       return movie.score;
     }
   })
@@ -50,7 +38,7 @@ function moviesAverageOfDirector(movies, director) {
 function orderAlphabetically(movies) {
  let titles = [...movies].sort((a, b) => a.title > b.title ? 1 : -1 );
  let titlesArray = titles.map(title => title['title']);
- let result= titlesArray.slice(0,20);
+ let result = titlesArray.slice(0,20);
  console.log("EXERCISE 4 ->", result);
  return result;
 }
@@ -62,7 +50,7 @@ let result = [...movies].sort((a,b) => a.year > b.year ? 1 : -1 );
 let res = result.sort((a,b) => {
   if(a.year === b.year){
     result.sort((a,b)=>a.title > b.title ? 1 : -1)}
-  } )
+  })
 
 console.log("EXERCISE 5 ->", res);
 return res;
@@ -86,20 +74,27 @@ function moviesAverageByCategory(movies,category) {
 
 // Exercise 7: Modify the duration of movies to minutes
 function hoursToMinutes(movies) {
-  let result = [...movies].map (movie => {
-    
-      let dur = movie.duration.split('h')
-  
-    dur[0] = dur[0]*60
-    if(dur[1]){
-      dur[1] = dur[1].replace('min','')
-      dur[1] = parseInt(dur[1])
+  let result = [...movies];
+  result = result.map (movie => {
+    let dur = movie.duration
+
+    if (dur.includes('h')){
+      let newDur = dur.split(' ')
+      let hour = parseInt(newDur[0])*60
+      dur = hour
+
+      if(newDur[1]){
+        let min = parseInt(newDur[1])
+        dur = hour + min
+      }  
+    }else{
+      dur = parseInt(dur)
     }
-    dur = dur[0]+ dur[1]
-    //dur = dur.toString().concat('min')
+
     movie.duration = dur
     return movie
   })
+
     console.log("EXERCICE 7 ->", result)
     return result
 }
@@ -107,19 +102,14 @@ function hoursToMinutes(movies) {
 // Exercise 8: Get the best film of a year
 function bestFilmOfYear(movies, year) {
   let years = movies.filter (movie => {
-    if(year==movie.year){
+    if(year===movie.year){
       return movie.year;
     }})
 
-  let result = years.reduce((acc, movie) => acc = acc > movie.score ? acc : movie.score, 0);
+  let result = years.sort((a,b) => b.score - a.score).slice(0,1)  
 
-  let bestMovie = years.filter(year => {
-    if(year.score==result){
-      return year;
-    }
-  })
-  console.log("EXERCICE 8 ->", bestMovie);
-  return bestMovie;
+  console.log("EXERCICE 8 ->", result)
+  return result
 }
 
 
@@ -138,3 +128,5 @@ if (typeof module !== 'undefined') {
     bestFilmOfYear,
   };
 }
+
+
