@@ -74,20 +74,23 @@ function moviesAverageByCategory(movies,category) {
 
 // Exercise 7: Modify the duration of movies to minutes
 function hoursToMinutes(movies) {
-  let result = [...movies];
-  result = result.map (movie => {
+  //Array nova:
+  function creadNewObject (objectFilm){
+    return {...objectFilm};
+  }
+  let clonedArray = movies.map(creadNewObject);
+  //Recorre tots els elements de la array
+  let result = clonedArray.map(transformToMin);
+  console.log("EXERCICE 7 ->", result);
+  return result;
+}
+
+function transformToMin(movie) {
     let dur = movie.duration
-
-    //check if duration is empty or 0
-    if(dur == 0 || dur == ' '){
-      dur = 0
-    }
-
     if (dur.includes('h')){
       let newDur = dur.split(' ')
       let hour = parseInt(newDur[0])*60
       dur = hour
-
       if(newDur[1]){
         let min = parseInt(newDur[1])
         dur = hour + min
@@ -95,13 +98,8 @@ function hoursToMinutes(movies) {
     }else{
       dur = parseInt(dur)
     }
-
     movie.duration = dur
     return movie
-  })
-
-    console.log("EXERCICE 7 ->", result)
-    return result
 }
 
 // Exercise 8: Get the best film of a year
